@@ -1,0 +1,1 @@
+Déposez vos captures d'écran dans ce répertoire.

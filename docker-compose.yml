@@ -1,0 +1,36 @@
+name: ecf-symfony-2503
+services: 
+  db:
+    image: mariadb:11.8.5
+    container_name: ecf-symfony-2503-mysql
+    restart: always
+    ports: ['3306:3306']
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: db_myapi
+      MYSQL_USER: user 
+      MYSQL_PASSWORD: user
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      MYSQL_ROOT_PASSWORD: root
+
+  web:
+    # image: "php:8.4-apache"
+    container_name: ecf-symfony-2503-web
+    build: .
+    restart: always
+    depends_on: ['db']
+    ports: ['80:80']
+    links: ['db:db']
+    volumes:
+      - './htdocs/:/var/www/html'
+    environment:
+      MYSQL_DB_HOST: db
+      MYSQL_DATABASE: db_myapi
+      MYSQL_USER: user 
+      MYSQL_PASSWORD: user
+
+
+
+volumes:
+  db_data: {}
